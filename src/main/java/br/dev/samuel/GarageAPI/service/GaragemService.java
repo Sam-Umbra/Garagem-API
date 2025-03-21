@@ -4,6 +4,7 @@
  */
 package br.dev.samuel.GarageAPI.service;
 
+import br.dev.samuel.GarageAPI.DTO.VeiculoDTO;
 import br.dev.samuel.GarageAPI.entities.Veiculo;
 import br.dev.samuel.GarageAPI.repositories.GaragemRepository;
 import java.util.List;
@@ -21,12 +22,21 @@ public class GaragemService {
     @Autowired
     private GaragemRepository garagemRepository;
     
-    public List<Veiculo> findAll() {
-        List<Veiculo> result = garagemRepository.findAll();
-        return result;
+    public List<VeiculoDTO> findAll() {
+        List<Veiculo> resultVeiculo = garagemRepository.findAll();
+        
+        List<VeiculoDTO> resultDTO = resultVeiculo.stream()
+                .map(x -> new VeiculoDTO(x)).toList();
+        
+        return resultDTO;
     }
     
     public Optional<Veiculo> findById(long id) {
         return garagemRepository.findById(id);
+    }
+    
+    public List<Veiculo> findByCor(String cor) {
+        List<Veiculo> result = garagemRepository.findByCorIgnoreCase(cor);
+        return result;
     }
 }

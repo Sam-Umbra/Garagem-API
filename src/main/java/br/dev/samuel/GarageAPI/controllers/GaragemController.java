@@ -4,6 +4,7 @@
  */
 package br.dev.samuel.GarageAPI.controllers;
 
+import br.dev.samuel.GarageAPI.DTO.VeiculoDTO;
 import br.dev.samuel.GarageAPI.entities.Veiculo;
 import br.dev.samuel.GarageAPI.service.GaragemService;
 import java.util.List;
@@ -25,8 +26,8 @@ public class GaragemController {
     private GaragemService garagemService;
     
     @GetMapping("/forsale")
-    public List<Veiculo> findAll() {
-        List<Veiculo> result = garagemService.findAll();
+    public List<VeiculoDTO> findAll() {
+        List<VeiculoDTO> result = garagemService.findAll();
         return result;
     }
     
@@ -41,6 +42,17 @@ public class GaragemController {
             
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @GetMapping("color/{cor}")
+    public ResponseEntity<List<Veiculo>> findByCorIgnoreCase(@PathVariable String cor) {
+        List<Veiculo> result = garagemService.findByCor(cor);
+        
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
         }
     }
 }
