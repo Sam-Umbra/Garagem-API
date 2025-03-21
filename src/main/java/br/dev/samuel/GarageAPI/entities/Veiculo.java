@@ -33,6 +33,7 @@ public class Veiculo {
     
     @Column (name = "linkimagem")
     private String linkImagem;
+    
     private String descricao;
     private String avarias;
 
