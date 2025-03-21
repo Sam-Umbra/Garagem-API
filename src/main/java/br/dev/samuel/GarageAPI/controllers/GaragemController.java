@@ -31,7 +31,7 @@ public class GaragemController {
         return result;
     }
     
-    @GetMapping("forsale/{id}")
+    @GetMapping("/forsale/{id}")
     public ResponseEntity<Veiculo> findById(@PathVariable long id) {
         Optional<Veiculo> optionalVeiculo = garagemService.findById(id);
         
@@ -45,9 +45,31 @@ public class GaragemController {
         }
     }
     
-    @GetMapping("color/{cor}")
-    public ResponseEntity<List<Veiculo>> findByCorIgnoreCase(@PathVariable String cor) {
-        List<Veiculo> result = garagemService.findByCor(cor);
+    @GetMapping("/color/{cor}")
+    public ResponseEntity<List<VeiculoDTO>> findByCorIgnoreCase(@PathVariable String cor) {
+        List<VeiculoDTO> result = garagemService.findByCor(cor);
+        
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+    }
+    
+    @GetMapping("/year/{ano}")
+    public ResponseEntity<List<VeiculoDTO>> findByAnoIgnoreCase(@PathVariable String ano) {
+        List<VeiculoDTO> result = garagemService.findByAno(ano);
+        
+        if (result.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(result);
+        }
+    }
+    
+    @GetMapping("/brand/{marca}")
+    public ResponseEntity<List<VeiculoDTO>> findByMarcaIgnoreCase(@PathVariable String marca) {
+        List<VeiculoDTO> result = garagemService.findByMarca(marca);
         
         if (result.isEmpty()) {
             return ResponseEntity.notFound().build();

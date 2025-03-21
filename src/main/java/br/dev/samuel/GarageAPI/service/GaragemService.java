@@ -35,8 +35,31 @@ public class GaragemService {
         return garagemRepository.findById(id);
     }
     
-    public List<Veiculo> findByCor(String cor) {
-        List<Veiculo> result = garagemRepository.findByCorIgnoreCase(cor);
-        return result;
+    public List<VeiculoDTO> findByCor(String cor) {
+        List<Veiculo> resultVeiculo = garagemRepository.findByCorIgnoreCase(cor);
+        
+        List<VeiculoDTO> resultDTO = resultVeiculo.stream()
+                .map(x -> new VeiculoDTO(x)).toList();
+        
+        return resultDTO;
     }
+    
+    public List<VeiculoDTO> findByAno(String ano) {
+        List<Veiculo> resultVeiculo = garagemRepository.findByAno(ano);
+        
+        List<VeiculoDTO> resultDTO = resultVeiculo.stream()
+                .map(x -> new VeiculoDTO(x)).toList();
+        
+        return resultDTO;
+    }
+    
+    public List<VeiculoDTO> findByMarca(String marca) {
+        List<Veiculo> resultVeiculo = garagemRepository.findByMarcaIgnoreCase(marca);
+        
+        List<VeiculoDTO> resultDTO = resultVeiculo.stream()
+                .map(x -> new VeiculoDTO(x)).toList();
+        
+        return resultDTO;
+    }
+    
 }
